@@ -11,25 +11,32 @@
 <body>
     <h1>Week 2 Weekend Project</h1>
 
+    <h2>Instructions</h2>
+        <ul>
+            <li type="1">Fill both number inputs</li>
+            <li type="1">Choose an equation</li>
+            <li type="1">Press the equal sign to calculate</li>
+        </ul>
+    <h3>If you wish to clear your inputs press the C button</h3>
+
     <form id="mathForm">
-        <input type="number" id="firstNumber">
+        <input type="number" id="firstNumber" placeholder="0">
         <input id="addition"type="button" class="mathButtons" value="+">
         <input id="subtraction"type="button" class="mathButtons" value="-">
-        <input id="multiply"type="button" class="mathButtons" value="*">
-        <input id="divide" type="button" class="mathButtons" value="/">
-        <input type="number" id="secondNumber">
-        <button>=</button>
-        <input type="button" class="mathButtons" id="clearInput" value="C">
+        <input id="multiply"type="button" class="mathButtons" value="*" >
+        <input id="divide" type="button" class="mathButtons" value="/" >
+        <input type="number" id="secondNumber" placeholder="0">
+        <button id="submitButton">=</button>
+        <input type="button" class="mathButtons" id="clearInput" value="C" disabled="disabled">
     </form>
     <br>
     <br>
-    <table id="historyTable">
+    <label for="historyTable">History: </label>
+    <table name="historyTable" id="historyTable">
         <thead>
-            <th>History</th>
         </thead>
         <tbody id="history">
             <tr>
-                <td>Test</td>
             </tr>
         </tbody>
     </table>

@@ -8,6 +8,8 @@ let prepToSend;
 
 let numberOfProblems = -1;
 
+let solvedProblems =[];
+
 function onReady(){
     console.log('jquery running');
     //an onClick that only calls buttons with the mathButtons class without submitting
@@ -15,6 +17,7 @@ function onReady(){
     $('.mathButtons').on('click', getValue);
     //submit form call
     $('#mathForm').on('submit', submitMath);
+    render();
 }
 
 
@@ -25,6 +28,7 @@ function onReady(){
 function getValue(){
     console.log('getting value of ', this);
     givenValue = $(this).val();
+    // formsFilled();
     if(givenValue === 'C'){
         console.log('clearing fields');
         $('#firstNumber').val('');
@@ -38,8 +42,6 @@ function getValue(){
         chosenEquation: givenValue
     }
 }
-    $('#firstNumber').val();
-    $('#secondNumber').val();
     console.log(prepToSend);
 }
 
@@ -55,8 +57,46 @@ function submitMath(evt){
     })
         .then(response => {
             console.log('data recieved', response);
+            $('#firstNumber').val('');
+            $('#secondNumber').val('');
         })
         .catch(err => {
             console.log('there was an error in submit math', err);
         })
+    getAnswer();
 }
+
+function getAnswer(){
+    $.ajax({
+        url:'/math-answer',
+        method: 'GET'
+    })
+        .then(response =>{
+            console.log('recieved', response);
+            solvedProblems.push(response);
+            render();
+        })
+        .catch(err =>{
+            console.log('an error was found in get answer', err);
+        })
+}
+
+function render(){
+    console.log('in render');
+    console.log('checking solvedProblems', solvedProblems);
+    $('#history').empty();
+    for(let objects of solvedProblems){
+        $('#history').append(`
+        <tr>
+            <td> ${objects.firstNumber} ${objects.equationUsed} ${objects.secondNumber} = ${objects.solvedProblem}
+        </tr>
+        `);
+    }
+}
+// This function should check the 
+// function formsFilled() {
+//     var name = document.getElementById("secondNumber").value;
+//     var cansubmit = (name.length > 0);
+//     document.getElementById("submitButton").disabled = !cansubmit;
+//     document.getElementsByClassName("mathButtons")
+// };
