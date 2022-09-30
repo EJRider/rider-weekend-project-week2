@@ -6,8 +6,6 @@ let givenValue;
 
 let prepToSend;
 
-let numberOfProblems = -1;
-
 let solvedProblems =[];
 
 function onReady(){
@@ -17,7 +15,7 @@ function onReady(){
     $('.mathButtons').on('click', getValue);
     //submit form call
     $('#mathForm').on('submit', submitMath);
-    render();
+    getHistory();
 }
 
 
@@ -81,9 +79,29 @@ function getAnswer(){
         })
 }
 
+function getHistory(){
+    $.ajax({
+        url: '/math-history',
+        method: 'GET'
+    })
+        .then(response =>{
+            console.log('recieved', response);
+            solvedProblems = response;
+            console.log(solvedProblems);
+            render();
+        })
+        .catch(err =>{
+            console.log('An error was found in getHistory', err);
+        })
+
+}
+
 function render(){
     console.log('in render');
     console.log('checking solvedProblems', solvedProblems);
+    if(solvedProblems.length === 0){
+        return;
+    }
     $('#history').empty();
     for(let objects of solvedProblems){
         $('#history').append(`
@@ -93,10 +111,3 @@ function render(){
         `);
     }
 }
-// This function should check the 
-// function formsFilled() {
-//     var name = document.getElementById("secondNumber").value;
-//     var cansubmit = (name.length > 0);
-//     document.getElementById("submitButton").disabled = !cansubmit;
-//     document.getElementsByClassName("mathButtons")
-// };

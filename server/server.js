@@ -4,6 +4,8 @@ const app = express();
 
 let mathHistory = [];
 
+let answerHistory =[];
+
 let numberOfProblemsSolved = -1;
 
 
@@ -24,8 +26,15 @@ app.post('/math-solve', (req,res)=>{
 })
 app.get('/math-answer', (req, res) => {
     let sentAnswer = problemSolver();
+    answerHistory.push(sentAnswer);
+    console.log('storing', answerHistory);
     console.log('Sending', sentAnswer)
     res.send(sentAnswer);
+})
+
+app.get('/math-history', (req, res)=>{
+    console.log(answerHistory);
+    res.send(answerHistory);
 })
 
 
