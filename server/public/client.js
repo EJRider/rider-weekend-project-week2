@@ -3,8 +3,9 @@ console.log('javascript running');
 $(document).ready(onReady);
 
 let givenValue;
+let numberOne;
+let numberTwo;
 
-let prepToSend;
 
 let solvedProblems =[];
 
@@ -33,21 +34,20 @@ function getValue(){
         $('#secondNumber').val('');
         return;
     }
-    else{
-    prepToSend = {
-        firstNumb: $('#firstNumber').val(),
-        secondNumb: $('#secondNumber').val(),
-        chosenEquation: givenValue
-    }
-}
-    console.log(prepToSend);
 }
 
 
 // this function takes the prepToSend object and sends it over to the server.
 function submitMath(evt){
     evt.preventDefault();
+    numberOne = $('#firstNumber').val();
+    numberTwo = $('#secondNumber').val();
     console.log('submitting math to server');
+    let prepToSend = {
+        firstNumb: numberOne,
+        secondNumb: numberTwo,
+        chosenEquation: givenValue
+    }
     $.ajax({
         url:'/math-solve',
         method: 'POST',
