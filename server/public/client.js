@@ -64,6 +64,7 @@ function submitMath(evt){
     getAnswer();
 }
 
+// This function calls the answer back from the server
 function getAnswer(){
     $.ajax({
         url:'/math-answer',
